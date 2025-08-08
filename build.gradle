@@ -14,13 +14,15 @@ java {
 }
 
 repositories {
-    mavenCentral()
+
     maven {
         url 'https://maven.aliyun.com/repository/public/'
     }
     maven {
         url 'https://maven.aliyun.com/repository/central'
     }
+
+    //mavenCentral()
 }
 
 dependencies {
@@ -38,7 +40,8 @@ dependencies {
     runtimeOnly 'mysql:mysql-connector-java:8.0.33'
 
 
-    implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter'
+    // https://mvnrepository.com/artifact/org.mybatis.spring.boot/mybatis-spring-boot-starter
+    implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.5'
 
 
 }
