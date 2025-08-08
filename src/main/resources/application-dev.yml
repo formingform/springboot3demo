@@ -1,0 +1,31 @@
+# 服务器配置
+server:
+  port: 4080
+  servlet:
+    context-path: /springboot3demo
+    encoding:
+      charset: UTF-8
+      force-response: true
+
+#日志配置
+logging:
+  #日志级别
+  level:
+    root: info
+    org.springframework: info
+    com.example: debug
+  file:
+    name: ./logs/demo.log
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} | %-5level | %thread | %logger{50}[%L] | %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss.SSS} | %-5level | %thread | trace-id[%X{requestId}] | %logger{50}[%L] | %msg%n"
+  logback:
+    rollingpolicy:
+      # 日志文件大小上限，达到该上限后，会自动压缩
+      max-file-size: 200MB
+      # 日志归档的文件名，日志文件达到一定大小之后，自动进行压缩归档
+      file-name-pattern: ./logs/demo-${spring.profiles.active}-%d{yyyy-MM-dd}-%i.log.gz
+      # 日志文件保存的天数
+      max-history: 30
+      # 是否在应用启动时进行归档管理
+      clean-history-on-start: true

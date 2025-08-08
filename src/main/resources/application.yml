@@ -1,0 +1,65 @@
+mysql:
+  username: platon
+  password: platon
+  url: jdbc:mysql://al-n9e6z7o3zd1vpbdk4.rwlb.rds.aliyuncs.com:3306/springboot3demo?useSSL=false&useServerPrepStmts=true&rewriteBatchedStatements=true&allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8
+
+
+
+spring:
+  application:
+    name: springboot3-demo
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: ${mysql.url}
+    username: ${mysql.username}
+    password: ${mysql.password}
+    druid:
+      initial-size: 100
+      max-active: 200
+      min-idle: 20
+      # 从连接池获取连接的最大等待时间,单位ms，默认-1，即会一直等待下去
+      max-wait: 60000
+      connection-init-sqls: set names utf8mb4
+      pool-prepared-statements: true
+
+# Spring Boot Actuator 是一套功能强大的工具，可帮助您监控和管理 Spring Boot 应用程序。然而，在生产环境中，出于安全性和稳定性考虑，通常需要禁用 Actuator。
+# 禁用 Actuator
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+
+# 服务器配置
+server:
+  port: 4080
+  servlet:
+    context-path: /springboot3demo
+    encoding:
+      charset: UTF-8
+      force-response: true
+
+#日志配置
+logging:
+  #日志级别
+  level:
+    root: info
+    org.springframework: info
+    com.example: debug
+  file:
+    name: ./logs/demo.log
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} | %-5level | %thread | %logger{50}[%L] | %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss.SSS} | %-5level | %thread | trace-id[%X{requestId}] | %logger{50}[%L] | %msg%n"
+  logback:
+    rollingpolicy:
+      # 日志文件大小上限，达到该上限后，会自动压缩
+      max-file-size: 200MB
+      # 日志归档的文件名，日志文件达到一定大小之后，自动进行压缩归档
+      file-name-pattern: ./logs/demo-${spring.profiles.active}-%d{yyyy-MM-dd}-%i.log.gz
+      # 日志文件保存的天数
+      max-history: 30
+      # 是否在应用启动时进行归档管理
+      clean-history-on-start: true
