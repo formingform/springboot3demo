@@ -1,6 +1,7 @@
 package com.example.springboot3demo;
 
 import lombok.extern.slf4j.Slf4j;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
@@ -9,6 +10,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 @ComponentScan(basePackages = "com.example")
+@MapperScan("com.example.springboot3demo.mapper")
 @Slf4j
 //如果Springboot3DemoApplication这个应用程序主类在根包，则可以不需要此注解，如果应用分了几个module，则需要
 public class Springboot3DemoApplication implements ApplicationRunner  {

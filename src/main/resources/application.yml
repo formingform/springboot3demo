@@ -1,7 +1,7 @@
 mysql:
   username: platon
   password: platon
-  url: jdbc:mysql://al-n9e6z7o3zd1vpbdk4.rwlb.rds.aliyuncs.com:3306/springboot3demo?useSSL=false&useServerPrepStmts=true&rewriteBatchedStatements=true&allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8
+  url: jdbc:mysql://192.168.9.191:3306/springboot3demo?useSSL=false&useServerPrepStmts=true&rewriteBatchedStatements=true&allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8
 
 
 
@@ -22,6 +22,15 @@ spring:
       max-wait: 60000
       connection-init-sqls: set names utf8mb4
       pool-prepared-statements: true
+
+
+
+# MyBatis配置（注意：一定要对应mapper映射xml文件的所在路径）
+mybatis:
+  mapper-locations: classpath*:mapperxml/*.xml
+  # 实体类别名配置（注意：对应实体类的路径）
+  type-aliases-package: com.example.springboot3demo.entity
+
 
 # Spring Boot Actuator 是一套功能强大的工具，可帮助您监控和管理 Spring Boot 应用程序。然而，在生产环境中，出于安全性和稳定性考虑，通常需要禁用 Actuator。
 # 禁用 Actuator
