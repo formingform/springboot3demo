@@ -17,14 +17,15 @@ public class UserController {
 
     @GetMapping("/{id}")
     public ResponseEntity<User> getUserById(@PathVariable Long id){
-        User user =userService.findById(id);
+        User user =userService.selectByPrimaryKey(id);
         return ResponseEntity.ok(user);
     }
 
     @PostMapping("/create")
     @ApiScope(target = "manage")
     public ResponseEntity<User> createUser(@RequestBody User user){
-        User createdUser = userService.save(user);
-        return ResponseEntity.status( HttpStatus.CREATED).body(createdUser);
+        userService.insert(user);
+
+        return ResponseEntity.status( HttpStatus.CREATED).body(user);
     }
 }
