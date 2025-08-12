@@ -19,11 +19,8 @@ services:
       - springboot-mysql-network
 
   mysqldb:
+    image: mysql:5.7
     container_name: springboot3demo_database
-    build:
-      context: ./mysql
-      dockerfile: db.Dockerfile
-    restart: always
     command: [
       '--character-set-server=utf8mb4',
       '--collation-server=utf8mb4_unicode_ci',
@@ -37,7 +34,10 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - ./mysql/data:/var/lib/mysql
+      # 关键：挂载 SQL 脚本到初始化目录（自动执行）
+      - ./demo_init.sql:/docker-entrypoint-initdb.d/init.sql
+      # 数据持久化
+      - mysql_data:/var/lib/mysql
     networks:
       - springboot-mysql-network
     healthcheck:
@@ -49,3 +49,8 @@ services:
 networks:
   springboot-mysql-network:
     name: springboot-mysql-network
+
+
+# 数据卷声明（持久化 MySQL 数据）
+volumes:
+  mysql_data:
