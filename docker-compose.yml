@@ -1,32 +1,4 @@
 services:
-  mysqldb:
-    image: mysql:5.7
-    container_name: springboot3demo_database
-    command: [
-      '--character-set-server=utf8mb4',
-      '--collation-server=utf8mb4_unicode_ci',
-      '--default-authentication-plugin=caching_sha2_password'
-    ]
-    environment:
-      - MYSQL_DATABASE=${MYSQL_DATABASE}
-      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
-      - MYSQL_USER=${MYSQL_USER}
-      - MYSQL_USER_PASSWORD=${MYSQL_USER_PASSWORD}
-    ports:
-      - "3306:3306"
-    volumes:
-      # 关键：挂载 SQL 脚本到初始化目录（自动执行）
-      - ./demo_init.sql:/docker-entrypoint-initdb.d/init.sql
-      # 数据持久化
-      - mysql_data:/var/lib/mysql
-    networks:
-      - springboot-mysql-network
-    healthcheck:
-      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
-      retries: 10
-      interval: 3s
-      timeout: 30s
-
   web:
     container_name: springboot3demo
     build:
@@ -45,6 +17,35 @@ services:
         condition: service_healthy
     networks:
       - springboot-mysql-network
+
+  mysqldb:
+    container_name: springboot3demo_database
+    build:
+      context: ./springboot3demo_database
+      dockerfile: db.Dockerfile
+    command: [
+      '--character-set-server=utf8mb4',
+      '--collation-server=utf8mb4_unicode_ci',
+      '--default-authentication-plugin=caching_sha2_password'
+    ]
+    environment:
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_USER_PASSWORD=${MYSQL_USER_PASSWORD}
+    ports:
+      - "3306:3306"
+    volumes:
+      # 数据持久化
+      - mysql_data:/var/lib/mysql
+    networks:
+      - springboot-mysql-network
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      retries: 10
+      interval: 3s
+      timeout: 30s
+
 
 networks:
   springboot-mysql-network:
