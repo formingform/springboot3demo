@@ -4,9 +4,9 @@ services:
     container_name: springboot3demo
     build:
       context: ./springboot3demo
-      dockerfile: ../docker/web/Dockerfile
+      dockerfile: ./docker/web/Dockerfile
     ports:
-      - 9008:8080
+      - "8080:8080"
     environment:
       - SPRING_DATASOURCE_URL=jdbc:mysql://mysqldb:3306/${MYSQL_DATABASE}
       - SPRING_DATASOURCE_USERNAME=root
@@ -23,7 +23,7 @@ services:
     container_name: springboot3demo_database
     build:
       context: ./mysql
-      dockerfile: prod.Dockerfile
+      dockerfile: ./docker/mysql/Dockerfile
     restart: always
     command: [
       '--character-set-server=utf8mb4',
@@ -32,7 +32,11 @@ services:
     ]
     environment:
       - MYSQL_DATABASE=${MYSQL_DATABASE}
-      - MYSQL_ROOT_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_USER_PASSWORD=${MYSQL_USER_PASSWORD}
+    ports:
+      - "3306:3306"
     volumes:
       - ./mysql/data:/var/lib/mysql
     networks:
