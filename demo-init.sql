@@ -1,3 +1,7 @@
+CREATE DATABASE IF NOT EXISTS springboot3demo DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+SET FOREIGN_KEY_CHECKS = 0;
+use springboot3demo;
+
 use springboot3demo;
 DROP TABLE  IF EXISTS `users`;
 CREATE TABLE `users` (
