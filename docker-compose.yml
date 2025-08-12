@@ -1,23 +1,4 @@
 services:
-  web:
-    container_name: springboot3demo
-    build:
-      context: ./springboot3demo
-      dockerfile: web.Dockerfile
-    ports:
-      - "8080:8080"
-    environment:
-      - SPRING_DATASOURCE_URL=jdbc:mysql://mysqldb:3306/${MYSQL_DATABASE}
-      - SPRING_DATASOURCE_USERNAME=${MYSQL_USER}
-      - SPRING_DATASOURCE_PASSWORD=${MYSQL_USER_PASSWORD}
-    volumes:
-      - ./springboot3demo/logs:/logs
-    depends_on:
-      mysqldb:
-        condition: service_healthy
-    networks:
-      - springboot-mysql-network
-
   mysqldb:
     image: mysql:5.7
     container_name: springboot3demo_database
@@ -45,6 +26,25 @@ services:
       retries: 10
       interval: 3s
       timeout: 30s
+
+  web:
+    container_name: springboot3demo
+    build:
+      context: ./springboot3demo
+      dockerfile: web.Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysqldb:3306/${MYSQL_DATABASE}
+      - SPRING_DATASOURCE_USERNAME=${MYSQL_USER}
+      - SPRING_DATASOURCE_PASSWORD=${MYSQL_USER_PASSWORD}
+    volumes:
+      - ./springboot3demo/logs:/logs
+    depends_on:
+      mysqldb:
+        condition: service_healthy
+    networks:
+      - springboot-mysql-network
 
 networks:
   springboot-mysql-network:
