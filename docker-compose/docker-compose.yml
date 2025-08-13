@@ -52,5 +52,5 @@ networks:
 
 
 # 数据卷声明（持久化 MySQL 数据）
-#volumes:
-#  mysql_data:
+volumes:
+  mysql_data:
