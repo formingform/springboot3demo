@@ -1,28 +1,28 @@
 services:
   web:
-    container_name: springboot3demo
+    container_name: springboot3demo-web
     build:
       context: ..
-      dockerfile: ./docker/web/web.Dockerfile
+      dockerfile: ../docker/web/Dockerfile
     ports:
       - "8080:4080"
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:mysql://mysqldb:3306/${MYSQL_DATABASE}
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/${MYSQL_DATABASE}
       - SPRING_DATASOURCE_USERNAME=${MYSQL_USER}
       - SPRING_DATASOURCE_PASSWORD=${MYSQL_USER_PASSWORD}
     volumes:
       - ./springboot3demo/logs:/logs
     depends_on:
-      mysqldb:
+      mysql:
         condition: service_healthy
     networks:
       - springboot-mysql-network
 
-  mysqldb:
-    container_name: springboot3demo_database
+  mysql:
+    container_name: springboot3demo-mysql
     build:
       context: ..
-      dockerfile: ./docker/mysql/db.Dockerfile
+      dockerfile: ../docker/mysql/Dockerfile
     command: [
       '--character-set-server=utf8mb4',
       '--collation-server=utf8mb4_unicode_ci'
