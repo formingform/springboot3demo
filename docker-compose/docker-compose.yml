@@ -13,7 +13,7 @@ services:
     volumes:
       - ./springboot3demo/logs:/logs
     depends_on:
-      mysql:
+      mysqldb:
         condition: service_healthy
     networks:
       - springboot-mysql-network
