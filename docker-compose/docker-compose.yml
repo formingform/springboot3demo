@@ -7,7 +7,7 @@ services:
     ports:
       - "8080:4080"
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/${MYSQL_DATABASE}
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysqldb:3306/${MYSQL_DATABASE}
       - SPRING_DATASOURCE_USERNAME=${MYSQL_USER}
       - SPRING_DATASOURCE_PASSWORD=${MYSQL_USER_PASSWORD}
     volumes:
@@ -18,8 +18,8 @@ services:
     networks:
       - springboot-mysql-network
 
-  mysql:
-    container_name: springboot3demo-mysql
+  mysqldb:
+    container_name: springboot3demo-mysqldb
     build:
       context: ..
       dockerfile: ../docker/mysql/Dockerfile
