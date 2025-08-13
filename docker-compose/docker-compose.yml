@@ -2,10 +2,10 @@ services:
   web:
     container_name: springboot3demo
     build:
-      context: ./springboot3demo
-      dockerfile: web.Dockerfile
+      context: ..
+      dockerfile: ./docker/web/web.Dockerfile
     ports:
-      - "8080:8080"
+      - "8080:4080"
     environment:
       - SPRING_DATASOURCE_URL=jdbc:mysql://mysqldb:3306/${MYSQL_DATABASE}
       - SPRING_DATASOURCE_USERNAME=${MYSQL_USER}
@@ -21,12 +21,11 @@ services:
   mysqldb:
     container_name: springboot3demo_database
     build:
-      context: ./springboot3demo_database
-      dockerfile: db.Dockerfile
+      context: ..
+      dockerfile: ./docker/mysql/db.Dockerfile
     command: [
       '--character-set-server=utf8mb4',
-      '--collation-server=utf8mb4_unicode_ci',
-      '--default-authentication-plugin=caching_sha2_password'
+      '--collation-server=utf8mb4_unicode_ci'
     ]
     environment:
       - MYSQL_DATABASE=${MYSQL_DATABASE}
@@ -53,5 +52,5 @@ networks:
 
 
 # 数据卷声明（持久化 MySQL 数据）
-volumes:
-  mysql_data:
+#volumes:
+#  mysql_data:

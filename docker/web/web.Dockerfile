@@ -10,7 +10,7 @@ WORKDIR /app/lesson
 
 #将本地编译的jar复制到容器中的 /app/lesson目录
 #如果镜像已经打包并放到仓库，则不需要
-COPY ./build/libs/springboot3-demo-0.0.1-SNAPSHOT.jar springboot3demo.jar
+COPY ../../build/libs/springboot3-demo-0.0.1-SNAPSHOT.jar springboot3demo.jar
 
 #容器会监听 8080 端口。这只是文档性质，实际运行时需要用 docker run -p 参数做端口映射。
 EXPOSE 8080
