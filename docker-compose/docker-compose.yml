@@ -2,9 +2,12 @@ services:
   web:
     container_name: springboot3demo-web
     build:
+      # context: .. 表示docker-compose命令运行时，web服务相对于当前文件的上下文目录（..表示回到根目录）
       context: ..
+      # dockerfile相对于context的路径
       dockerfile: ./docker/web/Dockerfile
     ports:
+      # 后面的4080是application.yml中配置的
       - "8080:4080"
     environment:
       - SPRING_DATASOURCE_URL=jdbc:mysql://mysqldb:3306/${MYSQL_DATABASE}
